@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
 
@@ -69,9 +70,28 @@ public class MainController {
         return SUCCESS;
     }
 
+    /**
+     * 参数在请求URL中，可以直接注入Pojo入参
+     *
+     * @param user User
+     * @return status
+     */
     @GetMapping("/addUser2")
     public String testBeanParam2(User user) {
         logger.error("add user2: " + user);
+        return SUCCESS;
+    }
+
+    @GetMapping("/testRequestParam")
+    public String testRequestParam(String name, Integer age, HttpServletRequest req) {
+
+        String contextPath = req.getContextPath();
+
+        System.out.println(contextPath);
+
+        System.out.println(req.getQueryString());
+        System.out.println("name: " + name);
+        System.out.println("age: " + age);
         return SUCCESS;
     }
 }
